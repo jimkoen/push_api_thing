@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "metadata",
+  "title": "addSubscription",
   "description": "An object representing the metadata associated with a push subscription",
   "type": "object",
   "properties": {
@@ -17,7 +17,27 @@
       "type": "integer"
     },
     "subscription" : {
-      "$ref": "../../../common/subscription.schema.json"
+      "endpoint" : {
+        "description": "The specific capability url (vendor-endpoint) to which push messages need to be sent in order to reach the user.",
+        "type": "string"
+      },
+      "expirationTime" : {
+        "description": "Unknown, but needs to be present.",
+        "type": "number"
+      },
+      "keys" : {
+        "description": "The public key of the client. Is used to sign the push notification in order to prove validity to the vendor endpoint.",
+        "type": "object",
+        "properties": {
+          "p256dh" : {
+            "type": "string"
+          },
+          "auth": {
+            "type": "string"
+          }
+        },
+        "required": ["p256dh", "auth"]
+      }
     }
   },
   "required": ["id", "timestamp", "type", "subscription"]
