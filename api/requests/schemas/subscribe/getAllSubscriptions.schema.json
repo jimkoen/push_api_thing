@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "metadata",
+  "description": "An object representing the metadata associated with a push subscription",
+  "type": "object",
+  "properties": {
+    "subscription" : {
+      "$ref": "../../../common/subscription.schema.json"
+    }
+  },
+  "required": ["subscription"]
+}

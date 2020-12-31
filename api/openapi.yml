@@ -1,0 +1,81 @@
+openapi: 3.0.0
+info:
+  title: "Backup-Assistant Push-Service"
+  description: "Documentation of the Assistant API"
+  version: 0.0.1
+
+tags:
+  - name: "subscription"
+    description: "Everything related to subscriptions"
+
+paths:
+  /subscription:
+    post:
+      tags:
+        - "subscription"
+      summary: "Subscribes the user to the push service"
+      description: ""
+      operationId: "subscription_addSubscription"
+      requestBody:
+        description: "Subscription information with which a subscription will be generated"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '/requests/schemas/subscribe/addSubscription.schema.json'
+      responses:
+        "200":
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: '/responses/schemas/subscribe/addSubscription.schema.json'
+        "405":
+          description: "Invalid Input"
+
+    get:
+      tags:
+        - "subscription"
+      summary: "Returns a collection of push subscriptions the user is subscribed to"
+
+      operationId: "subscription_getAllSubscriptions"
+      requestBody:
+        description: "An empty object indicates, that all subscriptions should be obtained"
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '/requests/schemas/subscribe/getAllSubscriptions.schema.json'
+      responses:
+        "200":
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: '/responses/schemas/subscribe/getAllSubscriptions.schema.json'
+        "405":
+          "description": "Invalid Input"
+
+  /subscription/{id}:
+    delete:
+      tags:
+        - "subscription"
+      summary: "Removes user from the specified push subscription"
+
+      operationId: "subscription_removeSubscription"
+      description: ""
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '/requests/schemas/subscribe/removeSubscription.schema.json'
+      responses:
+        "200":
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: '/responses/schemas/subscribe/removeSubscription.schema.json'
+        "405":
+          "description": "Invalid Input"

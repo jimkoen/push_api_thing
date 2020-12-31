@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "metadata",
+  "description": "An object representing the metadata associated with a push subscription",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "The unique identifier (UUID) of this specific subscription.",
+      "type": "string"
+    },
+    "product": {
+      "description": "The product type of the subscription (eg. device name, backup plan, or backup medium such as 'HDD', 'SSD', 'iPhone 12 wih iOS 14', 'Backup with Time Machine').",
+      "type" : "string"
+    },
+    "timestamp": {
+      "description": "The specific unix timestamp on which the user is to be reminded of his backup.",
+      "type": "integer"
+    },
+    "subscription" : {
+      "$ref": "subscription.schema.json"
+    }
+  },
+  "required": ["id", "timestamp", "type", "subscription"]
+}
