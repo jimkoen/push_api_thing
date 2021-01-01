@@ -15,12 +15,14 @@ if(process.env.NODE_ENV !== 'production'){
 const route = process.env.ROUTE_ROOT;
 const port = process.env.PORT || 80;
 const sslPort = process.env.sslPort || 443;
+
+if(process.env.USE_SSL){
 const sslOptions = await (async () => {
     return {
         key: await fs.readFile(process.env.SSL_PRIV_KEY_PATH).catch((e) => {console.error("An Error occured while reading SSL Key:\n" + e + '\n' + "Exiting..."); process.exit(-1)}),
         cert: await fs.readFile(process.env.SSL_CERT_PATH).catch((e) => {console.error("An Error occured while reading SSL Certificate:\n" + e + '\n' + "Exiting..."); process.exit(-1)}),
     }
-})()
+})()}
 const app = express();
 const __dirname = path.dirname(import.meta.url);
 app.use(bodyParser.json());
@@ -66,6 +68,8 @@ app.use((err, req, res, next) => {
 
 
 http.createServer(app).listen(port);
-https.createServer(sslOptions, app).listen(sslPort, () => {
-    console.log("Server listening on port " + sslPort)
-});
+if(process.env.USE_SSL) {
+    https.createServer(sslOptions, app).listen(sslPort, () => {
+        console.log("Server listening on port " + sslPort)
+    });
+}
