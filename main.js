@@ -22,6 +22,7 @@ const sslOptions = await (async () => {
     }
 })()
 const app = express();
+const __dirname = path.dirname(import.meta.url);
 app.use(bodyParser.json());
 app.use(bodyParser.text());
 app.use(bodyParser.urlencoded({extended: false}));
