@@ -22,14 +22,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '/requests/schemas/subscribe/addSubscription.schema.json'
+              $ref: './requests/schemas/subscribe/addSubscription.schema.json'
       responses:
         "200":
           description: "Successful operation"
           content:
             application/json:
               schema:
-                $ref: '/responses/schemas/subscribe/addSubscription.schema.json'
+                $ref: './responses/schemas/subscribe/addSubscription.schema.json'
         "405":
           description: "Invalid Input"
 
@@ -45,14 +45,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '/requests/schemas/subscribe/getAllSubscriptions.schema.json'
+              $ref: './requests/schemas/subscribe/getAllSubscriptions.schema.json'
       responses:
         "200":
           description: "Successful operation"
           content:
             application/json:
               schema:
-                $ref: '/responses/schemas/subscribe/getAllSubscriptions.schema.json'
+                $ref: './responses/schemas/subscribe/getAllSubscriptions.schema.json'
         "405":
           "description": "Invalid Input"
 
@@ -69,13 +69,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '/requests/schemas/subscribe/removeSubscription.schema.json'
+              $ref: './requests/schemas/subscribe/removeSubscription.schema.json'
       responses:
         "200":
           description: "Successful operation"
           content:
             application/json:
               schema:
-                $ref: '/responses/schemas/subscribe/removeSubscription.schema.json'
+                $ref: './responses/schemas/subscribe/removeSubscription.schema.json'
         "405":
           "description": "Invalid Input"
