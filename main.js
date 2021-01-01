@@ -35,17 +35,29 @@ app.use(OpenApiValidator.middleware({
     })
 );
 
-app.post('/subscription', (req, res, next) => {
 
+app.post('/subscription', (req, res, next) => {
+    res.status(200);
+    res.send("200 OK");
 })
 
 app.get('/subscription', (req, res, next) => {
-
+    res.status(200);
+    res.send("200 OK");
 })
 
 app.delete('/subscription/:id', (req, res, next) => {
-
+    res.status(200);
+    res.send("200 OK");
 })
+
+app.use((err, req, res, next) => {
+    // format error
+    res.status(err.status || 500).json({
+        message: err.message,
+        errors: err.errors,
+    });
+});
 
 
 http.createServer(app).listen(port);
