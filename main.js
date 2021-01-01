@@ -36,6 +36,11 @@ app.use(OpenApiValidator.middleware({
 );
 
 
+app.post('/test', (req, res, next) =>{
+    res.status(200);
+    res.send("200 OK");
+})
+
 app.post('/subscription', (req, res, next) => {
     res.status(200);
     res.send("200 OK");
