@@ -1,5 +1,4 @@
 {
-
   "title": "addSubscription",
   "description": "An object representing the metadata associated with a push subscription",
   "type": "object",

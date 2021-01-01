@@ -9,6 +9,27 @@ tags:
     description: "Everything related to subscriptions"
 
 paths:
+
+  /test:
+    post:
+      tags:
+        - "testing"
+      summary: "Endpoint to test validator functionality"
+      description: "Endpoint to test validator functionality"
+      operationId: "test_testing"
+      requestBody:
+        description: "Test information"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './requests/schemas/testing/test.schema.json'
+      responses:
+        "200":
+          description: "Successful Operation"
+        "500":
+          description: "Internal Server Error"
+
   /subscription:
     post:
       tags:
