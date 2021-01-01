@@ -1,8 +1,13 @@
 import {promises as fs} from 'fs';
+import path from 'path';
 import http from 'http';
 import https from 'https';
 import dotenv from 'dotenv';
+import bodyParser from 'body-parser';
 import express from 'express';
+import OpenApiValidator from 'express-openapi-validator';
+import lowdb from 'lowdb';
+
 import * as webpush from 'web-push';
 if(process.env.NODE_ENV !== 'production'){
     dotenv.config();
@@ -12,12 +17,34 @@ const port = process.env.PORT || 80;
 const sslPort = process.env.sslPort || 443;
 const sslOptions = await (async () => {
     return {
-        key: fs.readFile(process.env.SSL_PRIV_KEY_PATH).catch((e) => {console.error("An Error occured while reading SSL Key:\n" + e + '\n' + "Exiting..."); process.exit(-1)}),
-        cert: fs.readFile(process.env.SSL_CERT_PATH).catch((e) => {console.error("An Error occured while reading SSL Certificate:\n" + e + '\n' + "Exiting..."); process.exit(-1)}),
+        key: await fs.readFile(process.env.SSL_PRIV_KEY_PATH).catch((e) => {console.error("An Error occured while reading SSL Key:\n" + e + '\n' + "Exiting..."); process.exit(-1)}),
+        cert: await fs.readFile(process.env.SSL_CERT_PATH).catch((e) => {console.error("An Error occured while reading SSL Certificate:\n" + e + '\n' + "Exiting..."); process.exit(-1)}),
     }
 })()
 const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.text());
+app.use(bodyParser.urlencoded({extended: false}));
 
+const spec = path.join(__dirname, "./api/openapi.yaml");
+app.use('/spec', express.static(spec));
+
+app.use(OpenApiValidator.middleware({
+    apiSpec: './api/openapi.yaml',
+    })
+);
+
+app.post('/subscription', (req, res, next) => {
+
+})
+
+app.get('/subscription', (req, res, next) => {
+
+})
+
+app.delete('/subscription/:id', (req, res, next) => {
+
+})
 
 
 http.createServer(app).listen(port);
