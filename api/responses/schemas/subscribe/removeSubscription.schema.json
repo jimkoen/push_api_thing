@@ -1,9 +1,16 @@
 {
   "title": "removeSubscription_response",
   "description": "An object representing the metadata associated with a push subscription",
-  "type": "array",
-  "items": {
-      "$ref": "../../../common/subscription.schema.json"
+  "type": "object",
+  "properties": {
+    "subscriptions" : {
+      "description" : "All the subscriptions that are currently alive for the user",
+      "type" : "array",
+      "items" : {
+        "$ref": "../../../common/subscription.schema.json"
+      }
+
+    }
   }
 }
 

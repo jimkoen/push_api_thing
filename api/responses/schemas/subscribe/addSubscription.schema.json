@@ -1,8 +1,14 @@
 {
   "title": "addSubscription_response",
   "description": "An object representing the metadata associated with a push subscription",
-  "type": "array",
-  "items": {
-    "$ref": "../../../common/subscription.schema.json"
+  "type": "object",
+  "properties": {
+    "subscriptions" : {
+      "description" : "All existing subscriptions for that user (empty if there aren't any)",
+      "type" : "array",
+      "items" : {
+        "$ref": "../../../common/subscription.schema.json"
+      }
+    }
   }
 }

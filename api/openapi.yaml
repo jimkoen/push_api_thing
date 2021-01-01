@@ -14,7 +14,7 @@ paths:
       tags:
         - "subscription"
       summary: "Subscribes the user to the push service"
-      description: ""
+      description: "This endpoint is used to subscribe the user to the service. There is no authentication mechanism, users are recognized by their unique subscription keypair, as the public key and user specific vendor endpoint need to remain secret anyways."
       operationId: "subscription_addSubscription"
       requestBody:
         description: "Subscription information with which a subscription will be generated"
@@ -63,7 +63,7 @@ paths:
       summary: "Removes user from the specified push subscription"
 
       operationId: "subscription_removeSubscription"
-      description: ""
+      description: "Removes the user from a subscription, by matching the UUID of that subscription to all existing subscriptions."
       parameters:
         - name: "id"
           in: "path"
