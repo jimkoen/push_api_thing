@@ -1,0 +1,16 @@
+{
+  "title": "test endpoint for testing the express validation",
+  "description": "test endpoint for testing the express validation",
+  "type": "object",
+  "properties": {
+    "id" : {
+      "description" : "id",
+      "type" : "number"
+    },
+    "name" : {
+      "description" : "name",
+      "type" : "string"
+    }
+  },
+  "required": ["id", "timestamp", "type", "subscription"]
+}
