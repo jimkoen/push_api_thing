@@ -51,5 +51,4 @@ app.delete('/subscription/:id', (req, res, next) => {
 http.createServer(app).listen(port);
 https.createServer(sslOptions, app).listen(sslPort, () => {
     console.log("Server listening on port " + sslPort)
-    console.log("Secret URL: " + botUrl);
 });
