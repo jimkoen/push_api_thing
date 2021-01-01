@@ -1,6 +1,5 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "metadata",
+  "title": "getAllSubscription_response",
   "description": "An object representing the metadata associated with a push subscription",
   "type": "array",
   "items": {
