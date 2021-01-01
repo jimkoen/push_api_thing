@@ -64,6 +64,13 @@ paths:
 
       operationId: "subscription_removeSubscription"
       description: ""
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of the active push subscription to be deleted"
+          schema:
+            type: string
+          required: true
       requestBody:
         required: true
         content:
