@@ -49,6 +49,8 @@ navigator.serviceWorker.ready
         document.body.appendChild(document.createElement('p').appendChild(debugInfo));
         document.body.appendChild(document.createElement('p').appendChild(subscriptionInfo));
 
+        console.log(requestBody);
+
 
         fetch('./subscription', {
             method: 'POST',
