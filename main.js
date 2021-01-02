@@ -49,7 +49,7 @@ webPush.setVapidDetails(
 
 
 
-db.defaults({subscriptions: []}).write();
+db.defaults({subscriptions: {}}).write();
 
 app.use(bodyParser.json());
 app.use(bodyParser.text());
@@ -85,15 +85,19 @@ app.post('/subscription', (req, res, next) => {
             product : req.body.product,
             timestamp : req.body.timestamp,
             subscription : req.body.subscription,
-        }).write();
+        }).sort((a, b) => {
+            return a.timestamp > b.timestamp;
+    }).write();
+
 
     let userSubscriptions = [];
     db.get('subscriptions').forEach(subscription => {
-        //check wether the subscription object found in the request matches any subscription property of subscriptions in the database
+        //check whether the subscription object found in the request matches any subscription property of subscriptions in the database
         if(subscription.subscription === req.body.subscription){
             userSubscriptions.push(subscription);
         }
     })
+
 
     res.status(200);
     res.send({
