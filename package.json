@@ -18,6 +18,7 @@
     "express-openapi-validator": "^4.10.2",
     "lowdb": "^1.0.0",
     "openapi-schema-validator": "^7.0.1",
+    "uuid": "^8.3.2",
     "web-push": "^3.4.4"
   }
 }

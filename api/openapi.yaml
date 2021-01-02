@@ -30,6 +30,23 @@ paths:
         "500":
           description: "Internal Server Error"
 
+  /vapidPublicKey:
+    get:
+      tags:
+        - "vapidKey"
+      summary: "Returns the vapid public key, that is necessary to fulfill the VAPID standard."
+      description: "This endpoint provides the vapid public key, that both client and vendor endpoint use to validate the OEM servers authenticity."
+      operationId: "vapidKey_getVapidKey"
+      responses:
+        "200":
+          description: "Successful operation"
+          content:
+            text/plain:
+              schema:
+                type: string
+        "500":
+          description: "Internal Server Error"
+
   /subscription:
     post:
       tags:

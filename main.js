@@ -8,7 +8,8 @@ import express from 'express';
 import OpenApiValidator from 'express-openapi-validator';
 import lowdb from 'lowdb';
 import FileSync from 'lowdb/adapters/FileSync.js';
-import * as webpush from 'web-push';
+import {v4 as uuidv4} from 'uuid';
+import * as webPush from 'web-push';
 if(process.env.NODE_ENV !== 'production'){
     dotenv.config();
 }
@@ -27,23 +28,39 @@ const sslOptions = await (async () => {
 const app = express();
 const __dirname = path.dirname(import.meta.url);
 const spec = path.join(__dirname, process.env.OPENAPI_SPEC_PATH);
-
-
 const adapter = new FileSync('./db/db.json');
 const db = lowdb(adapter);
+
+if (!process.env.VAPID_PUBLIC_KEY || !process.env.VAPID_PRIVATE_KEY) {
+    console.log("You must set the VAPID_PUBLIC_KEY and VAPID_PRIVATE_KEY "+
+        "environment variables. You can use the following ones:");
+    console.log(webPush.generateVAPIDKeys());
+    return;
+}
+
+webPush.setVapidDetails(
+    process.env.VAPID_URL,
+    process.env.VAPID_PUBLIC_KEY,
+    process.env.VAPID_PRIVATE_KEY
+);
+
+
 
 db.defaults({subscriptions: []}).write();
 
 app.use(bodyParser.json());
 app.use(bodyParser.text());
 app.use(bodyParser.urlencoded({extended: false}));
-
 app.use('/spec', express.static(process.env.OPENAPI_SPEC_PATH));
-
 app.use(OpenApiValidator.middleware({
     apiSpec: process.env.OPENAPI_SPEC_PATH,
     })
 );
+
+app.get('/vapidPublicKey', function(req, res) {
+    res.send(process.env.VAPID_PUBLIC_KEY);
+});
+
 
 app.post('/test', (req, res, next) =>{
     res.status(200);
@@ -53,15 +70,12 @@ app.post('/test', (req, res, next) =>{
 app.post('/subscription', (req, res, next) => {
     db.get('subscriptions').push(
         {
-            id : req.body.id,
+            id : uuidv4(),
             product : req.body.product,
             timestamp : req.body.timestamp,
             subscription : req.body.subscription,
         }).write();
-    res.sendStatus(200);
-})
 
-app.get('/subscription', (req, res, next) => {
     let userSubscriptions = [];
     db.get('subscriptions').forEach(subscription => {
         //check wether the subscription object found in the request matches any subscription property of subscriptions in the database
@@ -70,14 +84,46 @@ app.get('/subscription', (req, res, next) => {
         }
     })
 
-    if (userSubscriptions.length < 0) {
-        res.append()
-    }
+    res.status(200);
+    res.send({
+        subscriptions : userSubscriptions
+    })
+})
+
+app.get('/subscription', (req, res, next) => {
+    let userSubscriptions = [];
+    db.get('subscriptions').forEach(subscription => {
+        //check whether the subscription object found in the request matches any subscription property of subscriptions in the database
+        if(subscription.subscription === req.body.subscription){
+            userSubscriptions.push(subscription);
+        }
+    })
+
+    res.status(200);
+    res.send({
+        subscriptions : userSubscriptions
+    })
+
 })
 
 app.delete('/subscription/:id', (req, res, next) => {
+    db.get('subscriptions').remove(subscription => {
+        return subscription.id === req.body.id;
+    });
+    db.write();
+
+    let userSubscriptions = [];
+    db.get('subscriptions').forEach(subscription => {
+        //check whether the subscription object found in the request matches any subscription property of subscriptions in the database
+        if(subscription.subscription === req.body.subscription){
+            userSubscriptions.push(subscription);
+        }
+    })
+
     res.status(200);
-    res.send("200 OK");
+    res.send({
+        subscriptions : userSubscriptions
+    })
 })
 
 app.use((err, req, res, next) => {
