@@ -9,7 +9,7 @@ import OpenApiValidator from 'express-openapi-validator';
 import lowdb from 'lowdb';
 import FileSync from 'lowdb/adapters/FileSync.js';
 import {v4 as uuidv4} from 'uuid';
-import * as webPush from 'web-push';
+import webPush from 'web-push';
 if(process.env.NODE_ENV !== 'production'){
     dotenv.config();
 }
@@ -43,6 +43,9 @@ webPush.setVapidDetails(
     process.env.VAPID_PUBLIC_KEY,
     process.env.VAPID_PRIVATE_KEY
 );
+
+
+
 
 
 
