@@ -7,7 +7,7 @@
       "description" : "All existing subscriptions for that user (empty if there aren't any)",
       "type" : "array",
       "items" : {
-        "$ref": "../../../common/subscription.schema.json"
+        "$ref": "../../../common/metadata.schema.json"
       }
     }
   }

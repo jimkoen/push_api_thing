@@ -7,11 +7,12 @@ import bodyParser from 'body-parser';
 import express from 'express';
 import OpenApiValidator from 'express-openapi-validator';
 import lowdb from 'lowdb';
-
+import FileSync from 'lowdb/adapters/FileSync.js';
 import * as webpush from 'web-push';
 if(process.env.NODE_ENV !== 'production'){
     dotenv.config();
 }
+
 const route = process.env.ROUTE_ROOT;
 const port = process.env.PORT || 80;
 const sslPort = process.env.sslPort || 443;
@@ -25,18 +26,24 @@ const sslOptions = await (async () => {
 })()}
 const app = express();
 const __dirname = path.dirname(import.meta.url);
+const spec = path.join(__dirname, process.env.OPENAPI_SPEC_PATH);
+
+
+const adapter = new FileSync('./db/db.json');
+const db = lowdb(adapter);
+
+db.defaults({subscriptions: []}).write();
+
 app.use(bodyParser.json());
 app.use(bodyParser.text());
 app.use(bodyParser.urlencoded({extended: false}));
 
-const spec = path.join(__dirname, "./api/openapi.yaml");
-app.use('/spec', express.static(spec));
+app.use('/spec', express.static(process.env.OPENAPI_SPEC_PATH));
 
 app.use(OpenApiValidator.middleware({
-    apiSpec: './api/openapi.yaml',
+    apiSpec: process.env.OPENAPI_SPEC_PATH,
     })
 );
-
 
 app.post('/test', (req, res, next) =>{
     res.status(200);
@@ -44,13 +51,28 @@ app.post('/test', (req, res, next) =>{
 })
 
 app.post('/subscription', (req, res, next) => {
-    res.status(200);
-    res.send("200 OK");
+    db.get('subscriptions').push(
+        {
+            id : req.body.id,
+            product : req.body.product,
+            timestamp : req.body.timestamp,
+            subscription : req.body.subscription,
+        }).write();
+    res.sendStatus(200);
 })
 
 app.get('/subscription', (req, res, next) => {
-    res.status(200);
-    res.send("200 OK");
+    let userSubscriptions = [];
+    db.get('subscriptions').forEach(subscription => {
+        //check wether the subscription object found in the request matches any subscription property of subscriptions in the database
+        if(subscription.subscription === req.body.subscription){
+            userSubscriptions.push(subscription);
+        }
+    })
+
+    if (userSubscriptions.length < 0) {
+        res.append()
+    }
 })
 
 app.delete('/subscription/:id', (req, res, next) => {

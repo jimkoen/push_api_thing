@@ -7,7 +7,7 @@
       "description" : "All the subscriptions that are currently alive for the user",
       "type" : "array",
       "items" : {
-        "$ref": "../../../common/subscription.schema.json"
+        "$ref": "../../../common/metadata.schema.json"
       }
 
     }
