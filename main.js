@@ -54,6 +54,7 @@ db.defaults({subscriptions: []}).write();
 app.use(bodyParser.json());
 app.use(bodyParser.text());
 app.use(bodyParser.urlencoded({extended: false}));
+app.use('/', express.static('./static'));
 app.use('/spec', express.static(process.env.OPENAPI_SPEC_PATH));
 app.use(OpenApiValidator.middleware({
     apiSpec: process.env.OPENAPI_SPEC_PATH,
