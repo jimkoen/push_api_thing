@@ -40,8 +40,7 @@ navigator.serviceWorker.ready
         // in the server).
 
 
-        console.log(JSON.stringify(body));
-        console.log(body);
+
 
         fetch('./subscription', {
             method: 'POST',
