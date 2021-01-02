@@ -57,11 +57,11 @@ navigator.serviceWorker.ready
             headers: {
                 'Content-type': 'application/json'
             },
-            body: {
-                    product: JSON.stringify(product),
+            body: JSON.stringify({
+                    product: product.toString(),
                     timestamp: Number(timestamp),
                     subscription: subscription
-                },
+                }),
         });
     };
 
