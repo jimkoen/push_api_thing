@@ -59,7 +59,7 @@ navigator.serviceWorker.ready
             },
             body: JSON.stringify({
                 product: JSON.stringify(product),
-                timestamp: JSON.stringify(timestamp),
+                timestamp: Number(timestamp),
                 subscription: subscription
             }),
         });
