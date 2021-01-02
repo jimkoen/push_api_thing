@@ -1,8 +1,6 @@
 {
-
   "title": "getAllSubscription",
   "description": "An object representing the metadata associated with a push subscription",
-  "type": "object",
   "properties": {
     "subscription" : {
       "$ref": "../../../common/subscription.schema.json"

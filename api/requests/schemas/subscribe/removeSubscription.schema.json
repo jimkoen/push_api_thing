@@ -2,7 +2,6 @@
 
   "title": "removeSubscription",
   "description": "An object representing the metadata associated with a push subscription",
-  "type": "object",
   "properties": {
     "id": {
       "description": "The UUID of the specific product related subscription, as returned from '/getAllSubscriptions'"
