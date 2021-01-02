@@ -31,7 +31,7 @@ navigator.serviceWorker.ready
 
 
 
-    document.getElementById('doIt').onclick = function () {
+    document.getElementById('button_register').onclick = function () {
         const product = document.getElementById('product').value;
         const timestamp = document.getElementById('timestamp').value;
 
