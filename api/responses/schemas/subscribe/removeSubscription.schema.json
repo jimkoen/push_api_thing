@@ -9,7 +9,6 @@
       "items" : {
         "$ref": "../../../common/metadata.schema.json"
       }
-
     }
   }
 }
