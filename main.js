@@ -61,17 +61,20 @@ app.use(OpenApiValidator.middleware({
     })
 );
 
+
 app.get('/vapidPublicKey', function(req, res) {
     res.send(process.env.VAPID_PUBLIC_KEY);
 });
 
 
 app.post('/test', (req, res, next) =>{
+    console.log("Called '" + req.originalUrl + "' with: \n", req.body);
     res.status(200);
     res.send("200 OK");
 })
 
 app.post('/subscription', (req, res, next) => {
+    console.log("Called '" + req.originalUrl + "' with: \n", req.body);
     db.get('subscriptions').push(
         {
             id : uuidv4(),
@@ -95,6 +98,7 @@ app.post('/subscription', (req, res, next) => {
 })
 
 app.get('/subscription', (req, res, next) => {
+    console.log("Called '" + req.originalUrl + "' with: \n", req.body);
     let userSubscriptions = [];
     db.get('subscriptions').forEach(subscription => {
         //check whether the subscription object found in the request matches any subscription property of subscriptions in the database
@@ -111,6 +115,7 @@ app.get('/subscription', (req, res, next) => {
 })
 
 app.delete('/subscription/:id', (req, res, next) => {
+    console.log("Called '" + req.originalUrl + "' with: \n", req.body);
     db.get('subscriptions').remove(subscription => {
         return subscription.id === req.body.id;
     });
