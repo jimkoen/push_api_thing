@@ -14,5 +14,5 @@
       "$ref": "../../../common/subscription.schema.json"
     }
   },
-  "required": [ "timestamp", "type", "subscription"]
+  "required": [ "product","timestamp", "subscription"]
 }

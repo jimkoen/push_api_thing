@@ -10,5 +10,5 @@
       "$ref": "../../../common/subscription.schema.json"
     }
   },
-  "required": ["subscription"]
+  "required": ["id","subscription"]
 }
