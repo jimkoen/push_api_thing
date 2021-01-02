@@ -17,9 +17,9 @@ if(process.env.NODE_ENV !== 'production'){
 const route = process.env.ROUTE_ROOT;
 const port = process.env.PORT || 80;
 const sslPort = process.env.sslPort || 443;
-
+let sslOptions;
 if(process.env.USE_SSL){
-const sslOptions = await (async () => {
+ sslOptions = await (async () => {
     return {
         key: await fs.readFile(process.env.SSL_PRIV_KEY_PATH).catch((e) => {console.error("An Error occured while reading SSL Key:\n" + e + '\n' + "Exiting..."); process.exit(-1)}),
         cert: await fs.readFile(process.env.SSL_CERT_PATH).catch((e) => {console.error("An Error occured while reading SSL Certificate:\n" + e + '\n' + "Exiting..."); process.exit(-1)}),
