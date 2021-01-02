@@ -46,8 +46,8 @@ navigator.serviceWorker.ready
 
         let debugInfo = document.createTextNode(JSON.stringify(requestBody));
         let subscriptionInfo = document.createTextNode(JSON.stringify(requestBody.subscription));
-        document.appendChild(document.createElement('p').appendChild(debugInfo));
-        document.appendChild(document.createElement('p').appendChild(subscriptionInfo));
+        document.body.appendChild(document.createElement('p').appendChild(debugInfo));
+        document.body.appendChild(document.createElement('p').appendChild(subscriptionInfo));
 
 
         fetch('./subscription', {
