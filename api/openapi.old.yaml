@@ -43,7 +43,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Metadata'
+              $ref: './requests/schemas/subscribe/addSubscription.schema.json'
       responses:
         "200":
           description: "Successful operation"
@@ -66,7 +66,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Subscription'
+              $ref: './requests/schemas/subscribe/getAllSubscriptions.schema.json'
       responses:
         "200":
           description: "Successful operation"
@@ -97,13 +97,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                id:
-                  type: string
-                  description: An object representing the metadata associated with a push subscription
-                subscription:
-                  $ref: '#/components/schemas/Subscription'
+              $ref: './requests/schemas/subscribe/removeSubscription.schema.json'
       responses:
         "200":
           description: "Successful operation"
@@ -113,46 +107,3 @@ paths:
                 $ref: './responses/schemas/subscribe/removeSubscription.schema.json'
         "405":
           "description": "Invalid Input"
-components:
-  schemas:
-    Metadata:
-      type: object
-      properties:
-        id:
-          type: string
-          description: An object representing the metadata associated with a push subscription
-        product:
-          type: string
-          description: "The product type of the subscription (eg. device name, backup plan, or backup medium such as 'HDD', 'SSD', 'iPhone 12 wih iOS 14', 'Backup with Time Machine')."
-        timestamp:
-          type: string
-          description: "The specific unix timestamp on which the user is to be reminded of his backup."
-        subscription:
-          $ref: '#/components/schemas/Subscription'
-      required:
-        - id
-        - timestamp
-        - product
-        - subscription
-
-    Subscription:
-      type: object
-      properties:
-        endpoint:
-          type: string
-        expiration_time:
-          type: number
-        keys:
-          type: object
-          properties:
-            p256dh:
-              type: string
-            auth:
-              type: string
-          required:
-            - p256dh
-            - auth
-      required:
-        - endpoint
-        - expirationTime
-        - keys
