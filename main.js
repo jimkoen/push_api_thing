@@ -86,7 +86,7 @@ app.post('/subscription', (req, res, next) => {
             timestamp : req.body.timestamp,
             subscription : req.body.subscription,
         }).sort((a, b) => {
-            console.log(a.timestamp > b.timestamp);
+            console.log("Result of array sort: " + a.timestamp > b.timestamp);
             return a.timestamp > b.timestamp;
     }).write();
 
