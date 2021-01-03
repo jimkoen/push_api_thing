@@ -44,11 +44,6 @@ webPush.setVapidDetails(
     process.env.VAPID_PRIVATE_KEY
 );
 
-
-
-
-
-
 db.defaults({subscriptions: []}).write();
 
 app.use(bodyParser.json());
@@ -94,7 +89,7 @@ app.post('/subscription', (req, res, next) => {
 
 
     let userSubscriptions = [];
-    db.get('subscriptions').forEach(subscription => {
+    db.get('subscriptions').value().forEach(subscription => {
         //check whether the subscription object found in the request matches any subscription property of subscriptions in the database
         if(subscription.subscription === req.body.subscription){
             userSubscriptions.push(subscription);
