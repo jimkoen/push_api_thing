@@ -149,6 +149,17 @@ app.use((err, req, res, next) => {
     });
 });
 
+function checkForDueSubcriptions(subscriptions){
+    subscriptions.forEach((subscription => {
+        let now = new Date();
+        if(subscription.timestamp < now.getTime()){
+            webPush.sendNotification(subscription.subscription, null);
+        }
+    }));
+}
+
+setInterval(checkForDueSubcriptions, 5000, db.get('subscriptions').value());
+
 
 http.createServer(app).listen(port);
 if(process.env.USE_SSL) {
