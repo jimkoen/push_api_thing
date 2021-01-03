@@ -72,28 +72,22 @@ app.get('/vapidPublicKey', function(req, res) {
 
 
 app.post('/test', (req, res, next) =>{
-    console.log("Called '" + req.originalUrl + "' with: \n", req.body);
+    console.log("Called '" + req.originalUrl);
     res.status(200);
     res.send("200 OK");
 })
 
 app.post('/subscription', (req, res, next) => {
-    console.log("Called '" + req.originalUrl + "' with: \n", req.body);
-    let subscriptions = db.get('subscriptions')
-    subscriptions.push(
+    console.log("Called '" + req.originalUrl);
+    db.get('subscriptions').push(
         {
             id : uuidv4(),
             product : req.body.product,
             timestamp : req.body.timestamp,
             subscription : req.body.subscription,
-        });
-    subscriptions.sort((a, b) => {
-        return a.timestamp > b.timestamp;
-    })
+        }).write();
 
-    db.object.subscriptions = subscriptions;
-    db.write();
-
+    console.log(db.get('subscriptions').sortBy('timestamp'));
 
     let userSubscriptions = [];
     db.get('subscriptions').forEach(subscription => {
@@ -111,7 +105,7 @@ app.post('/subscription', (req, res, next) => {
 })
 
 app.get('/subscription', (req, res, next) => {
-    console.log("Called '" + req.originalUrl + "' with: \n", req.body);
+    console.log("Called '" + req.originalUrl);
     let userSubscriptions = [];
     db.get('subscriptions').forEach(subscription => {
         //check whether the subscription object found in the request matches any subscription property of subscriptions in the database
@@ -128,7 +122,7 @@ app.get('/subscription', (req, res, next) => {
 })
 
 app.delete('/subscription/:id', (req, res, next) => {
-    console.log("Called '" + req.originalUrl + "' with: \n", req.body);
+    console.log("Called '" + req.originalUrl);
     db.get('subscriptions').remove(subscription => {
         return subscription.id === req.body.id;
     });
