@@ -88,7 +88,7 @@ app.post('/subscription', (req, res, next) => {
         }).write();
 
     let subscriptions = db.get('subscriptions').value();
-    console.log("the type of subscriptions is " + typeof subscriptions);
+    console.log("Is subscriptions an array? " + Array.isArray(subscriptions));
     subscriptions = subscriptions.sort((a, b) => {
         return a.timestamp < b.timestamp;
     })
