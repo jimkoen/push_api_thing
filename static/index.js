@@ -1,7 +1,7 @@
 navigator.serviceWorker.register('https://push.i7.si/service-worker.js');
 
 function addSeconds(date, seconds){
-    return new Date(date.getTime + seconds * 1000);
+    return new Date(date.getTime() + seconds * 1000);
 }
 navigator.serviceWorker.ready
     .then(function (registration) {
@@ -62,7 +62,7 @@ navigator.serviceWorker.ready
             },
             body: JSON.stringify({
                     product: product.toString(),
-                    timestamp: Number(addSeconds(new Date(), 5).getTime()),
+                    timestamp: addSeconds(new Date(), 5).getTime()),
                     subscription: subscription
                 }),
         });
