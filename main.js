@@ -151,9 +151,13 @@ app.use((err, req, res, next) => {
 
 function checkForDueSubcriptions(subscriptions){
     subscriptions.forEach((subscription => {
+        let subscriptionId = subscription.id;
         let now = new Date();
         if(subscription.timestamp < now.getTime()){
             webPush.sendNotification(subscription.subscription, null);
+            db.get('subscriptions').remove({
+                id: subscriptionId
+            }).write();
         }
     }));
 }
