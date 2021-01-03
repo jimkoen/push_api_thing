@@ -108,7 +108,7 @@ app.get('/subscription', (req, res, next) => {
     let userSubscriptions = [];
     db.get('subscriptions').forEach(subscription => {
         //check whether the subscription object found in the request matches any subscription property of subscriptions in the database
-        if(subscription.subscription === req.body.subscription){
+        if(subscription.subscription.endpoint === req.body.subscription.endpoint){
             userSubscriptions.push(subscription);
         }
     })
