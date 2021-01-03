@@ -49,7 +49,7 @@ webPush.setVapidDetails(
 
 
 
-db.defaults({subscriptions: {}}).write();
+db.defaults({subscriptions: []}).write();
 
 app.use(bodyParser.json());
 app.use(bodyParser.text());
