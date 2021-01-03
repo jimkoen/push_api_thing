@@ -93,6 +93,8 @@ app.post('/subscription', (req, res, next) => {
         return a.timestamp < b.timestamp;
     })
 
+    console.log(subscriptions);
+
     let userSubscriptions = [];
     db.get('subscriptions').forEach(subscription => {
         //check whether the subscription object found in the request matches any subscription property of subscriptions in the database
