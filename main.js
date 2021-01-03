@@ -57,7 +57,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use('/', express.static('./static'));
 app.use('/spec', express.static(process.env.OPENAPI_SPEC_PATH));
 app.use('*', (req, res, next) =>{
-    console.log(req.body);
+
     next();
 })
 app.use(OpenApiValidator.middleware({
@@ -87,7 +87,11 @@ app.post('/subscription', (req, res, next) => {
             subscription : req.body.subscription,
         }).write();
 
-    console.log(db.get('subscriptions').value().sort((a, b) => {return a.timestamp < b.timestamp}));
+    let subscriptions = db.get('subscriptions').value();
+    console.log("the type of subscriptions is " + typeof subscriptions);
+    subscriptions = subscriptions.sort((a, b) => {
+        return a.timestamp < b.timestamp;
+    })
 
     let userSubscriptions = [];
     db.get('subscriptions').forEach(subscription => {
