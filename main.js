@@ -88,12 +88,10 @@ app.post('/subscription', (req, res, next) => {
         }).write();
 
     let subscriptions = db.get('subscriptions').value();
-    console.log("Is subscriptions an array? " + Array.isArray(subscriptions));
     subscriptions = subscriptions.sort((a, b) => {
         return a.timestamp - b.timestamp;
     })
 
-    console.log(subscriptions);
 
     let userSubscriptions = [];
     db.get('subscriptions').forEach(subscription => {

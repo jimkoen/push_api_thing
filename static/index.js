@@ -1,5 +1,8 @@
 navigator.serviceWorker.register('https://push.i7.si/service-worker.js');
 
+function addSeconds(date, seconds){
+    return new Date(date.getTime + seconds * 1000);
+}
 navigator.serviceWorker.ready
     .then(function (registration) {
         // Use the PushManager to get the user's subscription to the push service.
@@ -59,7 +62,7 @@ navigator.serviceWorker.ready
             },
             body: JSON.stringify({
                     product: product.toString(),
-                    timestamp: Number(timestamp),
+                    timestamp: addSeconds(new Date(), 5).getTime(),
                     subscription: subscription
                 }),
         });
