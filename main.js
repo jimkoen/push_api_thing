@@ -79,13 +79,20 @@ app.post('/test', (req, res, next) =>{
 
 app.post('/subscription', (req, res, next) => {
     console.log("Called '" + req.originalUrl + "' with: \n", req.body);
-    db.get('subscriptions').push(
+    let subscriptions = db.get('subscriptions')
+    subscriptions.push(
         {
             id : uuidv4(),
             product : req.body.product,
             timestamp : req.body.timestamp,
             subscription : req.body.subscription,
-        }).sortBy('timestamp').write();
+        });
+    subscriptions.sort((a, b) => {
+        return a.timestamp > b.timestamp;
+    })
+
+    db.object.subscriptions = subscriptions;
+    db.write();
 
 
     let userSubscriptions = [];
