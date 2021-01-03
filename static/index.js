@@ -62,7 +62,7 @@ navigator.serviceWorker.ready
             },
             body: JSON.stringify({
                     product: product.toString(),
-                    timestamp: addSeconds(new Date(), 5).getTime(),
+                    timestamp: Number(addSeconds(new Date(), 5).getTime()),
                     subscription: subscription
                 }),
         });
