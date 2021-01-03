@@ -87,7 +87,7 @@ app.post('/subscription', (req, res, next) => {
             subscription : req.body.subscription,
         }).write();
 
-    console.log(db.get('subscriptions').sort((a, b) => {return a.timestamp < b.timestamp}));
+    console.log(db.get('subscriptions').value().sort((a, b) => {return a.timestamp < b.timestamp}));
 
     let userSubscriptions = [];
     db.get('subscriptions').forEach(subscription => {
