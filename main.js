@@ -85,10 +85,7 @@ app.post('/subscription', (req, res, next) => {
             product : req.body.product,
             timestamp : req.body.timestamp,
             subscription : req.body.subscription,
-        }).sort((a, b) => {
-            console.log("Result of array sort: " + a.timestamp > b.timestamp);
-            return a.timestamp > b.timestamp;
-    }).write();
+        }).sortBy('timestamp').write();
 
 
     let userSubscriptions = [];
